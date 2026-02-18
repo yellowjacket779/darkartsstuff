@@ -7,13 +7,13 @@ $Users = Import-Csv -Path $CsvPath
 foreach ($User in $Users) {
     
     # Validation
-    if ([string]::IsNullOrWhiteSpace($User.FirstName) -or [string]::IsNullOrWhiteSpace($User.UserID)) {
-        Write-Warning "Skipping entry: Missing Name or UserID."
+    if ([string]::IsNullOrWhiteSpace($User.FirstName) -or [string]::IsNullOrWhiteSpace($User.username)) {
+        Write-Warning "Skipping entry: Missing Name or username."
         continue
     }
 
-    # 2. FIXED: Changed .Username to .UserID to match your validation and CSV
-    $Username = $User.UserID 
+    # 2. FIXED: Changed .Username to .username to match your validation and CSV
+    $Username = $User.username 
     
     # 3. FIXED: Changed $Lastname to $User.LastName
     $Fullname = "$($User.FirstName) $($User.LastName)"
@@ -25,12 +25,11 @@ foreach ($User in $Users) {
         UserPrincipalName     = $UPN
         AccountPassword       = $DefaultPassword
         Enabled               = $true
-        Path                  = "OU=Users,DC=company,DC=com"
+        Path                  = "CN=Users,DC=WayneManor,DC=lab"
         Title                 = $User.Title
         ChangePasswordAtLogon = $false
     }
 
-    # This runs without try/catch (as requested)
     New-ADUser @UserParams
     Write-Host "Created user: $Username ($FullName)" -ForegroundColor Green
 }
