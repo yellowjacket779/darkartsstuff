@@ -1,4 +1,4 @@
-$CsvPath = "C:\temp\users.csv" 
+$CsvPath = "C:\temp\users.csv" #change to 
 $Domain = "WayneManor.com"
 $DefaultPassword = ConvertTo-SecureString "Secure!23" -AsPlainText -Force
 
@@ -25,7 +25,7 @@ foreach ($User in $Users) {
         UserPrincipalName     = $UPN
         AccountPassword       = $DefaultPassword
         Enabled               = $true
-        Path                  = "CN=Users,DC=WayneManor,DC=lab"
+        Path                  = "CN=Users,DC=WayneManor,DC=com"
         Title                 = $User.Title
         ChangePasswordAtLogon = $false
     }
